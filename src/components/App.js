@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Header from "./Header";
 
-function App() {
+const urlJSON = 'http://localhost:3001/pups'
+
+function DogDetails (){
   return (
-    <div className="App">
-      <div id="filter-div">
-        <button id="good-dog-filter">Filter good dogs: OFF</button>
-      </div>
-      <div id="dog-bar"></div>
       <div id="dog-summary-container">
         <h1>DOGGO:</h1>
-        <div id="dog-info"></div>
+        <div id="dog-info">
+          <img src="" alt="dog picture"></img>
+          <h2>Dog Name</h2>
+          <button>Good Dog!</button>
+        </div>
       </div>
+  )
+}
+
+function App() {
+  const [dogList, setDogList] = useState([])
+
+  useEffect( () => {
+    fetch(urlJSON)
+    .then( res  => res.json())
+    .then( data => setDogList(data))
+  }, [])
+
+  return (
+    <div className="App">
+      <Header dogList = {dogList} />
+      <DogDetails />
     </div>
   );
 }

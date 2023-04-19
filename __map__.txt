@@ -1,0 +1,12 @@
+
+
+
+
+
+index.js
+|--- App [state for dog list]
+    |--- Header
+        |--- filter button [state]
+        |--- DogBar
+    |--- DogDetails 
+        |--- good bad button
