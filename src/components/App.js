@@ -1,23 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
+import DogDetails from "./DogDetails";
+import { urlJSON } from "../data/urlJson";
 
-const urlJSON = 'http://localhost:3001/pups'
 
-function DogDetails (){
-  return (
-      <div id="dog-summary-container">
-        <h1>DOGGO:</h1>
-        <div id="dog-info">
-          <img src="" alt="dog picture"></img>
-          <h2>Dog Name</h2>
-          <button>Good Dog!</button>
-        </div>
-      </div>
-  )
-}
+
 
 function App() {
   const [dogList, setDogList] = useState([])
+  const [dogDetail, setDogDetail] = useState(null)
 
   useEffect( () => {
     fetch(urlJSON)
@@ -25,10 +16,15 @@ function App() {
     .then( data => setDogList(data))
   }, [])
 
+  function updateDogList (dogObj){
+    const updatedDogList = dogList.map (dog => dog.id === dogObj.id ? dogObj : dog)
+    setDogList(updatedDogList)
+  }
+
   return (
     <div className="App">
-      <Header dogList = {dogList} />
-      <DogDetails />
+      <Header dogList = {dogList} setDogDetail = {setDogDetail} />
+      <DogDetails dogDetail={dogDetail} updateDogList = {updateDogList}/>
     </div>
   );
 }

@@ -3,11 +3,16 @@ import DogBarNames from "./DogBarNames";
 
 
 
-function Header({dogList}) {
+function Header({dogList, setDogDetail}) {
   const [filter, setFilter] = useState(false)
 
   function handleOnClickFilter(){
     setFilter(!filter)
+  }
+
+  function handleOnClickDogDetail(id){
+    const dogDetail = dogList.find( dog => dog.id === id)
+    setDogDetail(dogDetail)
   }
 
   const filteredDogList = filter 
@@ -22,7 +27,7 @@ function Header({dogList}) {
           </button>
       </div>
       <div id="dog-bar">
-        { filteredDogList.map( dog => <DogBarNames key = {dog.id} id = {dog.id} name = {dog.name} /> ) }
+        { filteredDogList.map( dog => <DogBarNames key = {dog.id} id = {dog.id} name = {dog.name} handleOnClickDogDetail={handleOnClickDogDetail}/> ) }
       </div>
     </div>
   );

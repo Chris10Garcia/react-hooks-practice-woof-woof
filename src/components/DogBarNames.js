@@ -1,8 +1,8 @@
 import React from "react"
 
-function DogBarNames({id, name}){
+function DogBarNames({id, name, handleOnClickDogDetail}){
     return(
-      <span onClick = { () => console.log(id) }>{name}</span>
+      <span onClick = { () => handleOnClickDogDetail(id) }>{name}</span>
     )
 }
 
