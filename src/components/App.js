@@ -8,7 +8,7 @@ import { urlJSON } from "../data/urlJson";
 
 function App() {
   const [dogList, setDogList] = useState([])
-  const [dogDetail, setDogDetail] = useState(null)
+
 
   useEffect( () => {
     fetch(urlJSON)
@@ -23,8 +23,11 @@ function App() {
 
   return (
     <div className="App">
-      <Header dogList = {dogList} setDogDetail = {setDogDetail} />
-      <DogDetails dogDetail={dogDetail} updateDogList = {updateDogList}/>
+      
+      {/* <Header dogList = {dogList} setDogDetail = {setDogDetail} /> */}
+      {/* <DogDetails dogDetail={dogDetail} updateDogList = {updateDogList}/> */}
+      <Header dogList = {dogList}/>
+      <DogDetails updateDogList = {updateDogList}/>
     </div>
   );
 }
