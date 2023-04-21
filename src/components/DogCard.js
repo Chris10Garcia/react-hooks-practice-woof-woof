@@ -5,13 +5,13 @@ import { urlJSON } from "../data/urlJson"
 function DogCard ({updateDogList}){
 
     const { id } = useParams()
-    const [dogDetail, setDogDetail] = useState({
-        name : "Loading",
-        isGoodDog : "Loading",
-        image : "Loading"
-    })
+    const [dogDetail, setDogDetail] = useState(null)
 
-    console.log(id)
+    useEffect( () => {
+        fetch(urlJSON + "/" + id)
+        .then( r => r.json())
+        .then( d => setDogDetail(d))
+      }, [id])
 
     function patchRequestIsGoodDog(){
         dogDetail.isGoodDog = !dogDetail.isGoodDog
@@ -24,22 +24,17 @@ function DogCard ({updateDogList}){
         .then( dogObj => updateDogList(dogObj))
     }
 
-    useEffect( () => {
-      fetch(urlJSON + "/" + id)
-      .then( r => r.json())
-      .then( d => setDogDetail(d))
-    }, [id])
 
-    console.log(dogDetail)
+    if (!dogDetail) {
+        return (<h2>Loading dog details...</h2>)}
+
+    const {name, isGoodDog, image} = dogDetail
 
     return(
             <div id="dog-info">
-                  <img src={dogDetail.image} alt={dogDetail.name}></img>
-                  <h2>{dogDetail.name}</h2>
-                  <button onClick = {patchRequestIsGoodDog}>{dogDetail.isGoodDog ? "Bad Dog!" : "Good Dog!"}</button>
-                  {/* <img src={"dogDetail.image"} alt={"dogDetail.name"}></img>
-                  <h2>{"dogDetail.name"}</h2>
-                  <button onClick = {patchRequestIsGoodDog}>{`dogDetail.isGoodDog ? "Bad Dog!" : "Good Dog!"`}</button> */}
+                  <img src={image} alt={name}></img>
+                  <h2>{name}</h2>
+                  <button onClick = {patchRequestIsGoodDog}>{isGoodDog ? "Bad Dog!" : "Good Dog!"}</button>
             </div>
     )
 
